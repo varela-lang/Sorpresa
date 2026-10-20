@@ -559,7 +559,7 @@
     function showMessage() { revealSection('mensaje') }
     function showFinal() { revealSection('final') }
     const gallery = document.getElementById('gallery');
-    for (let i = 1; i <= 50; i++) {
+    for (let i = 1; i <= 10; i++) {
       const card = document.createElement('div'); card.className = 'memory';
       const num = String(i).padStart(2, '0');
       const img = document.createElement('img'); img.src = `fotos/${num}.jpg`; img.alt = `Recuerdo ${i}`; img.loading = 'lazy';
