@@ -234,68 +234,6 @@
       text-transform: uppercase
     }
 
-    .memory-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 35px
-    }
-
-    .memory {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 4/5;
-      border-radius: 13px;
-      background: linear-gradient(145deg, #202b55, #15182f);
-      border: 1px solid #ffffff15;
-      cursor: pointer
-    }
-
-    .memory img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform .6s, filter .4s;
-      filter: saturate(.85)
-    }
-
-    .memory:hover img {
-      transform: scale(1.06);
-      filter: saturate(1.1)
-    }
-
-    .memory .placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px;
-      text-align: center;
-      color: #c5cbe0;
-      font-size: .8rem
-    }
-
-    .memory .placeholder b {
-      font-size: 1.5rem;
-      color: var(--gold);
-      font-weight: 400
-    }
-
-    .memory.loaded .placeholder {
-      display: none
-    }
-
-    .memory img {
-      display: none
-    }
-
-    .memory.loaded img {
-      display: block
-    }
 
     .caption {
       font-size: .85rem;
@@ -314,30 +252,6 @@
       font-style: italic
     }
 
-    #lightbox {
-      position: fixed;
-      inset: 0;
-      background: #030511ed;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 25px
-    }
-
-    #lightbox img {
-      max-width: 95vw;
-      max-height: 85vh;
-      border-radius: 10px;
-      box-shadow: 0 20px 80px #0008
-    }
-
-    #lightbox button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 10px 15px
-    }
 
     footer {
       text-align: center;
@@ -379,14 +293,6 @@
         padding: 75px 18px
       }
 
-      .memory-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 9px
-      }
-
-      .memory {
-        aspect-ratio: 4/4.7
-      }
 
       .hero .lead {
         font-size: 1rem
@@ -454,7 +360,7 @@
           <div class="divider"></div>
           <p style="color:var(--gold);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase">Y ahora viene la
             parte difícil</p>
-          <h2 style="font-size:clamp(2rem,5vw,3.5rem);margin:15px 0">He decidido cerrar esta etapa como teacher y
+          <h2 style="font-size:clamp(2rem,5vw,3.5rem);margin:15px 0">He decidido cerrar esta etapa como su docente y
             comenzar un nuevo camino.</h2>
           <p>No es una decisión fácil, porque cuando uno quiere a las personas con las que comparte cada día, despedirse
             pesa. Pero también he aprendido que crecer a veces significa atreverse a dar un paso hacia lo desconocido.
@@ -462,24 +368,10 @@
         </div>
         <p style="margin-top:35px">Y no quería contarles esto con un simple mensaje.<br><strong
             style="color:var(--cream)">Ustedes merecían algo más bonito que eso.</strong></p>
-        <button onclick="showMemories()">Recordemos lo que construimos <span class="arrow">↓</span></button>
+        <button onclick="showMessage()">Hay algo más que quiero dejarles <span class="arrow">↓</span></button>
       </div>
     </section>
 
-    <section id="recuerdos" class="hidden">
-      <div class="wrap">
-        <div class="center">
-          <div class="eyebrow">Dos años en pequeños instantes</div>
-          <h2>No son solo fotografías.<br>Son pedacitos de nuestra historia.</h2>
-          <p>De esos días que parecían normales y que, sin darnos cuenta, se volvieron recuerdos.</p>
-        </div>
-        <div class="memory-grid" id="gallery"></div>
-        <p class="caption center">Cada imagen guarda algo que una cámara no siempre puede capturar: lo que sentimos
-          cuando estábamos ahí.</p>
-        <div class="center" style="margin-top:45px"><button onclick="showMessage()">Hay algo más que quiero dejarles
-            <span class="arrow">↓</span></button></div>
-      </div>
-    </section>
 
     <section id="mensaje" class="hidden center">
       <div class="wrap reveal">
@@ -523,12 +415,9 @@
       </div>
     </section>
   </main>
-  <div id="lightbox" class="hidden" onclick="closeLightbox()"><button aria-label="Cerrar"
-      onclick="event.stopPropagation();closeLightbox()">Cerrar ✕</button><img id="lightbox-img" alt="Recuerdo ampliado"
-      onclick="event.stopPropagation()"></div>
   <footer>Hecho con cariño, para que nunca olviden que incluso del caos pueden nacer estrellas.</footer>
   <script>
-    const sections = ['escena-video', 'pausa', 'noticia', 'recuerdos', 'mensaje', 'final'];
+    const sections = ['escena-video', 'pausa', 'noticia', 'mensaje', 'final'];
     let pauseTimer = null;
     function revealSection(id) {
       document.getElementById(id).classList.remove('hidden');
@@ -555,22 +444,8 @@
         if (aviso) aviso.classList.remove('hidden');
       });
     }
-    function showMemories() { revealSection('recuerdos') }
     function showMessage() { revealSection('mensaje') }
     function showFinal() { revealSection('final') }
-    const gallery = document.getElementById('gallery');
-    for (let i = 1; i <= 10; i++) {
-      const card = document.createElement('div'); card.className = 'memory';
-      const num = String(i).padStart(2, '0');
-      const img = document.createElement('img'); img.src = `fotos/${num}.jpg`; img.alt = `Recuerdo ${i}`; img.loading = 'lazy';
-      img.onload = () => card.classList.add('loaded');
-      img.onerror = () => { };
-      const ph = document.createElement('div'); ph.className = 'placeholder'; ph.innerHTML = `<b>✧</b><span>Recuerdo ${num}</span><small>Agrega aquí tu foto</small>`;
-      card.append(img, ph); card.onclick = () => { if (card.classList.contains('loaded')) { document.getElementById('lightbox-img').src = img.src; document.getElementById('lightbox').classList.remove('hidden') } };
-      gallery.appendChild(card);
-    }
-    function closeLightbox() { document.getElementById('lightbox').classList.add('hidden') }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox() });
     // Fondo de estrellas generado localmente, sin dependencias externas.
     const canvas = document.getElementById('stars'), ctx = canvas.getContext('2d'); let stars = [];
     function resize() { canvas.width = innerWidth * devicePixelRatio; canvas.height = innerHeight * devicePixelRatio; ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); stars = Array.from({ length: Math.min(180, Math.floor(innerWidth / 7)) }, () => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, r: Math.random() * 1.4 + .2, a: Math.random() * .7 + .15, s: Math.random() * .006 + .002 })) }
