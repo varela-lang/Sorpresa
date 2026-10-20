@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b20">
+  <title>Hay algo que quiero decirles…</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+
+    :root {
+      --night: #080b20;
+      --blue: #111a3b;
+      --gold: #f3d49a;
+      --cream: #fff7e9;
+      --muted: #c4c9df;
+      --pink: #f3b6c8
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--night);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden
+    }
+
+    #stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none
+    }
+
+    .glow {
+      position: fixed;
+      width: 38rem;
+      height: 38rem;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: .12;
+      pointer-events: none;
+      z-index: -1;
+      background: #758cff;
+      top: -18rem;
+      left: -12rem
+    }
+
+    .glow.two {
+      background: #e8a7c4;
+      top: auto;
+      left: auto;
+      right: -20rem;
+      bottom: -20rem
+    }
+
+    section {
+      padding: 100px 22px;
+      position: relative
+    }
+
+    .wrap {
+      max-width: 1000px;
+      margin: auto
+    }
+
+    .center {
+      text-align: center
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: .72rem;
+      color: var(--gold);
+      font-weight: 700
+    }
+
+    h1,
+    h2,
+    .serif {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 6.8rem);
+      line-height: 1.02;
+      letter-spacing: -.04em;
+      margin: 24px 0
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.12;
+      margin: 18px 0 24px
+    }
+
+    p {
+      line-height: 1.8;
+      color: var(--muted);
+      font-size: 1.06rem
+    }
+
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 60px;
+      padding-bottom: 60px
+    }
+
+    .hero-content {
+      max-width: 850px
+    }
+
+    .hero .lead {
+      max-width: 600px;
+      margin: 0 auto 32px;
+      font-size: 1.15rem
+    }
+
+    button,
+    .button {
+      border: 1px solid rgba(243, 212, 154, .65);
+      background: linear-gradient(135deg, rgba(243, 212, 154, .16), rgba(243, 182, 200, .09));
+      color: var(--cream);
+      padding: 16px 24px;
+      border-radius: 999px;
+      font: 500 1rem 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: .25s;
+      text-decoration: none;
+      display: inline-flex;
+      gap: 12px;
+      align-items: center
+    }
+
+    button:hover,
+    .button:hover {
+      transform: translateY(-3px);
+      background: rgba(243, 212, 154, .2);
+      box-shadow: 0 10px 35px #0004
+    }
+
+    .arrow {
+      color: var(--gold);
+      font-size: 1.2rem
+    }
+
+    .hint {
+      font-size: .82rem;
+      color: #8f98ba;
+      margin-top: 18px
+    }
+
+    .hidden {
+      display: none !important
+    }
+
+    .reveal {
+      animation: reveal .9s ease both
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(22px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .divider {
+      width: 70px;
+      height: 1px;
+      background: var(--gold);
+      margin: 32px auto;
+      opacity: .7
+    }
+
+    .note {
+      max-width: 720px;
+      margin: auto;
+      padding: clamp(25px, 6vw, 60px);
+      border: 1px solid #ffffff1c;
+      background: linear-gradient(145deg, #ffffff0b, #ffffff03);
+      border-radius: 24px;
+      box-shadow: 0 25px 80px #0002
+    }
+
+    .note p {
+      font-size: 1.08rem
+    }
+
+    .note p strong {
+      color: var(--cream);
+      font-weight: 500
+    }
+
+    .quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.22;
+      color: var(--cream);
+      max-width: 850px;
+      margin: 30px auto
+    }
+
+    .quote em {
+      color: var(--gold);
+      font-weight: 500
+    }
+
+    .small-label {
+      color: var(--gold);
+      font-size: .75rem;
+      letter-spacing: .18em;
+      text-transform: uppercase
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 35px
+    }
+
+    .memory {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      border-radius: 13px;
+      background: linear-gradient(145deg, #202b55, #15182f);
+      border: 1px solid #ffffff15;
+      cursor: pointer
+    }
+
+    .memory img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s, filter .4s;
+      filter: saturate(.85)
+    }
+
+    .memory:hover img {
+      transform: scale(1.06);
+      filter: saturate(1.1)
+    }
+
+    .memory .placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      text-align: center;
+      color: #c5cbe0;
+      font-size: .8rem
+    }
+
+    .memory .placeholder b {
+      font-size: 1.5rem;
+      color: var(--gold);
+      font-weight: 400
+    }
+
+    .memory.loaded .placeholder {
+      display: none
+    }
+
+    .memory img {
+      display: none
+    }
+
+    .memory.loaded img {
+      display: block
+    }
+
+    .caption {
+      font-size: .85rem;
+      color: #9ca6c9;
+      margin-top: 14px
+    }
+
+    .final {
+      padding-bottom: 130px
+    }
+
+    .signature {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      font-style: italic
+    }
+
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: #030511ed;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px
+    }
+
+    #lightbox img {
+      max-width: 95vw;
+      max-height: 85vh;
+      border-radius: 10px;
+      box-shadow: 0 20px 80px #0008
+    }
+
+    #lightbox button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      color: #6e789d;
+      font-size: .78rem;
+      border-top: 1px solid #ffffff0c
+    }
+
+    .video-frame {
+      max-width: 900px;
+      margin: 28px auto 0;
+      padding: 10px;
+      border: 1px solid rgba(243, 212, 154, .28);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .035);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, .25)
+    }
+
+    .video-frame video {
+      display: block;
+      width: 100%;
+      max-height: 72vh;
+      border-radius: 12px;
+      background: #030511
+    }
+
+    .pause-message {
+      min-height: 55vh;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .pause-message .quote { max-width: 800px; margin: 0 auto }
+
+    @media(max-width:700px) {
+      section {
+        padding: 75px 18px
+      }
+
+      .memory-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 9px
+      }
+
+      .memory {
+        aspect-ratio: 4/4.7
+      }
+
+      .hero .lead {
+        font-size: 1rem
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="stars"></canvas>
+  <div class="glow"></div>
+  <div class="glow two"></div>
+  <main>
+    <section class="hero center" id="inicio">
+      <div class="hero-content">
+        <div class="eyebrow">Para una clase que se volvió hogar</div>
+        <h1>Hay algo que<br><span style="color:var(--gold);font-style:italic">quiero decirles.</span></h1>
+        <p class="lead">No es una tarea. No hay nota. Y por una vez, no tienen que entregar nada al final.</p>
+        <button onclick="openStory()">Estoy listo para escucharlo <span class="arrow">↗</span></button>
+        <div class="hint">Tómense un momento. Esta historia también es suya.</div>
+      </div>
+    </section>
+
+    <section id="escena-video" class="center hidden">
+      <div class="wrap reveal">
+        <div class="eyebrow">Un recuerdo que quiero que vean primero</div>
+        <h2>Hay momentos que no sabíamos que íbamos a extrañar.</h2>
+        <p>Antes de contarles lo que viene, quiero que volvamos por unos segundos a uno de esos momentos.</p>
+        <div class="video-frame">
+          <video id="salidaVideo" controls playsinline preload="metadata" aria-label="Video de despedida del salón">
+            <source src="video/salida-salon.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este video. Comprueba que el archivo sea MP4 y esté en la carpeta video.
+          </video>
+        </div>
+        <p class="caption" style="margin-top:18px">Escúchenlo tal como fue: las voces y los sonidos de ese momento también son parte del recuerdo.</p>
+        <p id="avisoVideo" class="caption hidden">No se pudo cargar el video. Verifica que se llame <strong>salida-salon.mp4</strong> y esté dentro de la carpeta <strong>video</strong>.</p>
+        <button id="continuarVideo" onclick="continuarDespedida()">Continuar <span class="arrow">↗</span></button>
+      </div>
+    </section>
+
+    <section id="pausa" class="center hidden pause-message">
+      <div class="wrap reveal">
+        <div class="eyebrow">Un pequeño silencio</div>
+        <div class="quote">“A veces, no sabemos que es un último momento… <em>hasta que se convierte en recuerdo.</em>”</div>
+      </div>
+    </section>
+
+    <section id="noticia" class="center hidden">
+      <div class="wrap reveal">
+        <div class="eyebrow">Capítulo nuevo</div>
+        <h2>Antes de seguir, necesito contarles algo.</h2>
+        <div class="note">
+          <p>Durante estos dos años compartimos mucho más que clases, proyectos, errores, códigos y entregas a última
+            hora.</p>
+          <p>Compartimos momentos que me voy a llevar conmigo. Ustedes fueron parte de una etapa muy importante de mi
+            vida, y enseñarles significó mucho más de lo que quizá imaginan.</p>
+          <div class="divider"></div>
+          <p style="color:var(--gold);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase">Y ahora viene la
+            parte difícil</p>
+          <h2 style="font-size:clamp(2rem,5vw,3.5rem);margin:15px 0">He decidido cerrar esta etapa como teacher y
+            comenzar un nuevo camino.</h2>
+          <p>No es una decisión fácil, porque cuando uno quiere a las personas con las que comparte cada día, despedirse
+            pesa. Pero también he aprendido que crecer a veces significa atreverse a dar un paso hacia lo desconocido.
+          </p>
+        </div>
+        <p style="margin-top:35px">Y no quería contarles esto con un simple mensaje.<br><strong
+            style="color:var(--cream)">Ustedes merecían algo más bonito que eso.</strong></p>
+        <button onclick="showMemories()">Recordemos lo que construimos <span class="arrow">↓</span></button>
+      </div>
+    </section>
+
+    <section id="recuerdos" class="hidden">
+      <div class="wrap">
+        <div class="center">
+          <div class="eyebrow">Dos años en pequeños instantes</div>
+          <h2>No son solo fotografías.<br>Son pedacitos de nuestra historia.</h2>
+          <p>De esos días que parecían normales y que, sin darnos cuenta, se volvieron recuerdos.</p>
+        </div>
+        <div class="memory-grid" id="gallery"></div>
+        <p class="caption center">Cada imagen guarda algo que una cámara no siempre puede capturar: lo que sentimos
+          cuando estábamos ahí.</p>
+        <div class="center" style="margin-top:45px"><button onclick="showMessage()">Hay algo más que quiero dejarles
+            <span class="arrow">↓</span></button></div>
+      </div>
+    </section>
+
+    <section id="mensaje" class="hidden center">
+      <div class="wrap reveal">
+        <div class="eyebrow">Para cuando tengan miedo</div>
+        <div class="quote">“Hasta los planetas chocan y <em>del caos nacen las estrellas.</em>”</div>
+        <div class="divider"></div>
+        <div class="note" style="text-align:left">
+          <p>Quiero que recuerden esto, especialmente cuando algo no les salga bien:</p>
+          <p><strong>No tengan miedo a equivocarse.</strong> Equivocarse no significa que no sean capaces; significa que
+            están intentando algo que todavía no dominan.</p>
+          <p>Van a escribir código que no funcione, tomar decisiones que después cambiarían, empezar proyectos que
+            parezcan imposibles y vivir días en los que sentirán que todo se desordena.</p>
+          <p>Está bien. No todo error es un fracaso, ni todo caos es el final. A veces, justo ahí, empieza algo
+            extraordinario.</p>
+          <p>No esperen a sentirse preparados para intentarlo. Aprendan, vuelvan a probar, pidan ayuda, tengan paciencia
+            con ustedes mismos y no permitan que el miedo les robe la oportunidad de descubrir de qué son capaces.</p>
+          <p><strong>El mundo no necesita que sean perfectos. Necesita que se atrevan a crear, a aprender y a levantarse
+              una vez más.</strong></p>
+        </div>
+        <div class="center" style="margin-top:45px"><button onclick="showFinal()">Una última cosa… <span
+              class="arrow">♡</span></button></div>
+      </div>
+    </section>
+
+    <section id="final" class="final hidden center">
+      <div class="wrap reveal">
+        <div class="eyebrow">Esto no borra lo vivido</div>
+        <h2>Las despedidas no hacen pequeños los recuerdos.</h2>
+        <p style="max-width:680px;margin:0 auto">Aunque ya no esté frente a ustedes como su docente, me voy con la
+          alegría de haber coincidido en este tramo del camino. Gracias por cada risa, cada pregunta, cada reto y cada
+          momento en que me recordaron por qué vale la pena enseñar.</p>
+        <p style="max-width:680px;margin:25px auto">No puedo prometerles que todo será fácil. Pero sí deseo que, cuando
+          la vida les ponga un problema enfrente, recuerden que ya han resuelto cosas que al principio parecían
+          imposibles. Hagan lo mismo con la vida: paso a paso, intento a intento.</p>
+        <div class="divider"></div>
+        <div class="quote" style="font-size:clamp(2rem,5vw,3.4rem)">Gracias por dejarme ser parte de su
+          historia.<br><em>Ahora vayan a escribir la suya.</em></div>
+        <p class="signature">Con muchísimo cariño,<br>Teacher Sergio.</p>
+        <button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="margin-top:25px">Volver al principio
+          ↑</button>
+      </div>
+    </section>
+  </main>
+  <div id="lightbox" class="hidden" onclick="closeLightbox()"><button aria-label="Cerrar"
+      onclick="event.stopPropagation();closeLightbox()">Cerrar ✕</button><img id="lightbox-img" alt="Recuerdo ampliado"
+      onclick="event.stopPropagation()"></div>
+  <footer>Hecho con cariño, para que nunca olviden que incluso del caos pueden nacer estrellas.</footer>
+  <script>
+    const sections = ['escena-video', 'pausa', 'noticia', 'recuerdos', 'mensaje', 'final'];
+    let pauseTimer = null;
+    function revealSection(id) {
+      document.getElementById(id).classList.remove('hidden');
+      setTimeout(() => document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+    }
+    function openStory() { revealSection('escena-video'); }
+    function continuarDespedida() {
+      const video = document.getElementById('salidaVideo');
+      if (video) video.pause();
+      if (pauseTimer) clearTimeout(pauseTimer);
+      document.getElementById('escena-video').classList.add('hidden');
+      revealSection('pausa');
+      // Deja unos segundos de silencio antes de mostrar la noticia.
+      pauseTimer = setTimeout(() => {
+        document.getElementById('pausa').classList.add('hidden');
+        revealSection('noticia');
+      }, 4500);
+    }
+    const salidaVideo = document.getElementById('salidaVideo');
+    if (salidaVideo) {
+      salidaVideo.addEventListener('ended', continuarDespedida);
+      salidaVideo.addEventListener('error', () => {
+        const aviso = document.getElementById('avisoVideo');
+        if (aviso) aviso.classList.remove('hidden');
+      });
+    }
+    function showMemories() { revealSection('recuerdos') }
+    function showMessage() { revealSection('mensaje') }
+    function showFinal() { revealSection('final') }
+    const gallery = document.getElementById('gallery');
+    for (let i = 1; i <= 50; i++) {
+      const card = document.createElement('div'); card.className = 'memory';
+      const num = String(i).padStart(2, '0');
+      const img = document.createElement('img'); img.src = `fotos/${num}.jpg`; img.alt = `Recuerdo ${i}`; img.loading = 'lazy';
+      img.onload = () => card.classList.add('loaded');
+      img.onerror = () => { };
+      const ph = document.createElement('div'); ph.className = 'placeholder'; ph.innerHTML = `<b>✧</b><span>Recuerdo ${num}</span><small>Agrega aquí tu foto</small>`;
+      card.append(img, ph); card.onclick = () => { if (card.classList.contains('loaded')) { document.getElementById('lightbox-img').src = img.src; document.getElementById('lightbox').classList.remove('hidden') } };
+      gallery.appendChild(card);
+    }
+    function closeLightbox() { document.getElementById('lightbox').classList.add('hidden') }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox() });
+    // Fondo de estrellas generado localmente, sin dependencias externas.
+    const canvas = document.getElementById('stars'), ctx = canvas.getContext('2d'); let stars = [];
+    function resize() { canvas.width = innerWidth * devicePixelRatio; canvas.height = innerHeight * devicePixelRatio; ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); stars = Array.from({ length: Math.min(180, Math.floor(innerWidth / 7)) }, () => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, r: Math.random() * 1.4 + .2, a: Math.random() * .7 + .15, s: Math.random() * .006 + .002 })) }
+    function draw() { ctx.clearRect(0, 0, innerWidth, innerHeight); for (const s of stars) { s.a += Math.sin(Date.now() * s.s) * .003; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(255,239,207,${Math.max(.1, Math.min(.8, s.a))})`; ctx.fill() } requestAnimationFrame(draw) }
+    addEventListener('resize', resize); resize(); draw();
+  </script>
+</body>
+
+</html>
